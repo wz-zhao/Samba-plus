@@ -1,9 +1,5 @@
-# 🌟 Samba+
-## General and Accurate Salient Object Detection via a More Unified Mamba-based Framework
+# 🌟 Samba+: General and Accurate Salient Object Detection via a More Unified Mamba-based Framework
 
-<p align="center">
-  <strong>Extended Version</strong>
-</p>
 
 <p align="center">
   Wenzhuo Zhao, Keren Fu, Jiahao He, Xiaohong Liu, Qijun Zhao, Guangtao Zhai
@@ -50,7 +46,7 @@ We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demo
 - 🧠 Pure **Mamba-based architecture** for unified SOD modeling  
 - 🎯 **Saliency-Guided Mamba Block (SGMB)** with Spatial Neighboring Scanning (SNS)  
 - 🔄 **Context-Aware Upsampling (CAU)** for hierarchical feature alignment  
-- 🌈 Support for **RGB / RGB-D / RGB-T / VSOD / RGB-D VSOD**
+- 🌈 Support for **RGB SOD / RGB-D SOD / RGB-T SOD / VDT SOD / VSOD / RGB-D VSOD**
 
 ---
 
@@ -69,23 +65,24 @@ We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demo
 | RGB SOD | DUTS | DUTS, ECSSD, HKU-IS, PASCAL-S, DUT-O | [Baidu](https://pan.baidu.com/s/1oljb1_kkUH7rhWZCy8ic4g) (`x7kn`) |
 | RGB-D SOD | NJU2K, NLPR, DUT-RGBD | NJU2K, NLPR, DUT-RGBD, SIP, STERE | [Baidu](https://pan.baidu.com/s/1ibrO3CS7rn7bJUAy8hM9mQ) (`8b9c`) |
 | RGB-T SOD | VT5000 | VT5000, VT821, VT1000 | [Baidu](https://pan.baidu.com/s/1PKW5d_Yr5NFEnq9Q82HitA) (`xhrm`) |
+| VDT SOD | VDT-2048 | VDT-2048 | [Baidu](https://pan.baidu.com/s/1JyFBtjlJGf4GE2zeciN1wQ?pwd=bipy) (`bipy`) |
 | VSOD | DAVIS, DAVSOD, FBMS | DAVIS, DAVSOD, FBMS, Seg-V2, VOS | [Baidu](https://pan.baidu.com/s/1zQ-vuDnSfRzJ1T_T-hh7sA) (`kcmu`) |
 | RGB-D VSOD | RDVS, DVisal, Vidsod_100 | RDVS, DVisal, Vidsod_100 | [Baidu](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA) (`q9ty`) |
-| RGB-D VSOD | RDVS, DVisal, Vidsod_100 | RDVS, DVisal, Vidsod_100 | [Baidu](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA) (`q9ty`) |
 
-
+---
 ## ⚙️ Environment Setup
 
-```bash
-PyTorch 1.13.1
-CUDA 11.7
+- PyTorch 1.13.1
+- CUDA 11.7
+
 
 
 ## 📚 Citation
 
-If you use **Samba** in your research or find this work helpful, please consider citing:
+If you find this repository useful, please use the following BibTeX entry for citation and give us a star⭐.
 
 ```bibtex
+
 @InProceedings{He_2025_CVPR,
   author    = {He, Jiahao and Fu, Keren and Liu, Xiaohong and Zhao, Qijun},
   title     = {Samba: A Unified Mamba-based Framework for General Salient Object Detection},

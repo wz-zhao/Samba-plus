@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/intro_1.png" width="80%">
+  <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/Fig_intro.pdf" width="100%">
 </p>
 
 ---

@@ -1,14 +1,12 @@
-# 🌟 Samba+  
-## General and Accurate Salient Object Detection via a Unified Mamba-based Framework
+# 🌟 Samba+
+## General and Accurate Salient Object Detection via a More Unified Mamba-based Framework
 
 <p align="center">
-  Wenzhuo Zhao, Keren Fu, Jiahao He, Xiaohong Liu, Qijun Zhao, Guangtao Zhai
+  <strong>Extended Journal Version</strong>
 </p>
 
 <p align="center">
-  <a href="https://www.kerenfu.top/sources/CVPR2025_Samba.pdf">📄 Paper</a> |
-  <a href="https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf">📘 中文版</a> |
-  <strong>CVPR 2025 (Highlight)</strong>
+  Wenzhuo Zhao, Keren Fu, Jiahao He, Xiaohong Liu, Qijun Zhao, Guangtao Zhai
 </p>
 
 <p align="center">
@@ -16,6 +14,47 @@
 </p>
 
 ---
+
+## 📌 Conference Version (CVPR 2025 Highlight)
+
+<p align="center">
+  <strong>Samba: A Unified Mamba-based Framework for General Salient Object Detection</strong>
+</p>
+
+<p align="center">
+  Jiahao He, Keren Fu, Xiaohong Liu, Qijun Zhao
+</p>
+
+<p align="center">
+  <a href="https://www.kerenfu.top/sources/CVPR2025_Samba.pdf">📄 Paper (PDF)</a> |
+  <a href="https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf">📘 中文版</a> |
+  <a href="https://github.com/Jia-hao999/Samba">
+  <strong>CVPR 2025 · Highlight</strong>
+
+<p align="center">
+  <a href="https://www.kerenfu.top/sources/CVPR2025_Samba.pdf">
+    <img src="https://img.shields.io/badge/Paper-CVPR%202025-blue">
+  </a>
+  <a href="https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf">
+    <img src="https://img.shields.io/badge/中文-PDF-red">
+  </a>
+  <img src="https://img.shields.io/badge/Status-Highlight-brightgreen">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Framework-Mamba-purple">
+  <img src="https://img.shields.io/badge/Task-General%20SOD-orange">
+  <img src="https://img.shields.io/badge/Version-Extended%20Journal-green">
+</p>
+
+  
+</p>
+
+</p>
+
+
+---
+
 
 ## 🚀 Introduction
 

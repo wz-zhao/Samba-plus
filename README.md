@@ -2,7 +2,7 @@
 ## General and Accurate Salient Object Detection via a More Unified Mamba-based Framework
 
 <p align="center">
-  <strong>Extended Journal Version</strong>
+  <strong>Extended Version</strong>
 </p>
 
 <p align="center">
@@ -22,33 +22,17 @@
 </p>
 
 <p align="center">
-  Jiahao He, Keren Fu, Xiaohong Liu, Qijun Zhao
-</p>
-
-<p align="center">
-  <a href="https://www.kerenfu.top/sources/CVPR2025_Samba.pdf">📄 Paper (PDF)</a> |
-  <a href="https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf">📘 中文版</a> |
-  <a href="https://github.com/Jia-hao999/Samba">
-  <strong>CVPR 2025 · Highlight</strong>
-
-<p align="center">
   <a href="https://www.kerenfu.top/sources/CVPR2025_Samba.pdf">
-    <img src="https://img.shields.io/badge/Paper-CVPR%202025-blue">
+    <img src="https://img.shields.io/badge/Paper-CVPR%202025 Highlight-blue">
   </a>
   <a href="https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf">
-    <img src="https://img.shields.io/badge/中文-PDF-red">
+    <img src="https://img.shields.io/badge/中文版-PDF-red">
   </a>
-  <img src="https://img.shields.io/badge/Status-Highlight-brightgreen">
+  <a href="https://github.com/Jia-hao999/Samba">
+    <img src="https://img.shields.io/badge/Model-Samba-black?logo=github">
+  </a>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Framework-Mamba-purple">
-  <img src="https://img.shields.io/badge/Task-General%20SOD-orange">
-  <img src="https://img.shields.io/badge/Version-Extended%20Journal-green">
-</p>
-
-  
-</p>
 
 </p>
 
@@ -78,97 +62,16 @@ We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demo
 
 ---
 
-## 📂 Data Preparation
+## 📂 Datasets
 
-### 1️⃣ RGB Salient Object Detection (RGB SOD)
-
-**Training Dataset**
-- DUTS (Train)
-
-**Testing Datasets**
-- DUTS  
-- ECSSD  
-- HKU-IS  
-- PASCAL-S  
-- DUT-O  
-
-📎 Dataset Download:  
-[https://pan.baidu.com/s/1oljb1_kkUH7rhWZCy8ic4g](https://pan.baidu.com/s/1oljb1_kkUH7rhWZCy8ic4g)  
-Extraction Code: `x7kn`
-
----
-
-### 2️⃣ RGB-D Salient Object Detection (RGB-D SOD)
-
-**Training Datasets**
-- NJU2K  
-- NLPR  
-- DUT-RGBD  
-
-**Testing Datasets**
-- NJU2K  
-- NLPR  
-- DUT-RGBD  
-- SIP  
-- STERE  
-
-📎 Dataset Download:  
-[https://pan.baidu.com/s/1ibrO3CS7rn7bJUAy8hM9mQ](https://pan.baidu.com/s/1ibrO3CS7rn7bJUAy8hM9mQ)  
-Extraction Code: `8b9c`
-
----
-
-### 3️⃣ RGB-T Salient Object Detection (RGB-T SOD)
-
-**Training Dataset**
-- VT5000  
-
-**Testing Datasets**
-- VT5000  
-- VT821  
-- VT1000  
-
-📎 Dataset Download:  
-[https://pan.baidu.com/s/1PKW5d_Yr5NFEnq9Q82HitA](https://pan.baidu.com/s/1PKW5d_Yr5NFEnq9Q82HitA)  
-Extraction Code: `xhrm`
-
----
-
-### 4️⃣ Video Salient Object Detection (VSOD)
-
-**Training Datasets**
-- DAVIS  
-- DAVSOD  
-- FBMS  
-
-**Testing Datasets**
-- DAVIS  
-- DAVSOD  
-- FBMS  
-- Seg-V2  
-- VOS  
-
-📎 Dataset Download:  
-[https://pan.baidu.com/s/1zQ-vuDnSfRzJ1T_T-hh7sA](https://pan.baidu.com/s/1zQ-vuDnSfRzJ1T_T-hh7sA)  
-Extraction Code: `kcmu`
-
----
-
-### 5️⃣ RGB-D Video Salient Object Detection (RGB-D VSOD)
-
-**Training Datasets**
-- RDVS  
-- DVisal  
-- Vidsod_100  
-
-**Testing Datasets**
-- RDVS  
-- DVisal  
-- Vidsod_100  
-
-📎 Dataset Download:  
-[https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA)  
-Extraction Code: `q9ty`
+| Task | Training Datasets | Testing Datasets | Download |
+|------|-------------------|------------------|----------|
+| RGB SOD | DUTS | DUTS, ECSSD, HKU-IS, PASCAL-S, DUT-O | [Baidu](https://pan.baidu.com/s/1oljb1_kkUH7rhWZCy8ic4g) (`x7kn`) |
+| RGB-D SOD | NJU2K, NLPR, DUT-RGBD | NJU2K, NLPR, DUT-RGBD, SIP, STERE | [Baidu](https://pan.baidu.com/s/1ibrO3CS7rn7bJUAy8hM9mQ) (`8b9c`) |
+| RGB-T SOD | VT5000 | VT5000, VT821, VT1000 | [Baidu](https://pan.baidu.com/s/1PKW5d_Yr5NFEnq9Q82HitA) (`xhrm`) |
+| VSOD | DAVIS, DAVSOD, FBMS | DAVIS, DAVSOD, FBMS, Seg-V2, VOS | [Baidu](https://pan.baidu.com/s/1zQ-vuDnSfRzJ1T_T-hh7sA) (`kcmu`) |
+| RGB-D VSOD | RDVS, DVisal, Vidsod_100 | RDVS, DVisal, Vidsod_100 | [Baidu](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA) (`q9ty`) |
+| RGB-D VSOD | RDVS, DVisal, Vidsod_100 | RDVS, DVisal, Vidsod_100 | [Baidu](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA) (`q9ty`) |
 
 
 ## ⚙️ Environment Setup

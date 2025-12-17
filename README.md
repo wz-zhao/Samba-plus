@@ -78,7 +78,7 @@ We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demo
 | RGB-D VSOD | RDVS, DVisal, Vidsod_100 | RDVS, DVisal, Vidsod_100 | [Baidu](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA?pwd=q9ty) (`q9ty`) |
 
 ### 🛠️ Overlapping Samples
-
+To avoid data leakage and ensure fair training, we only retain the samples from DVisal together with their ground-truth annotations.
 <p align="center">
   <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/fig_overlap_1.png" width="70%">
 </p>

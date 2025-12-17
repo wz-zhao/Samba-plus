@@ -1,59 +1,46 @@
-# [Under Review] Samba+: General and Accurate Salient Object Detection via A More Unified Mamba-based Framework
-Wenzhuo Zhao, Keren Fu, Jiahao He, Xiaohong Liu, Qijun Zhao, and Guangtao Zhai
+# 🌟 Samba+  
+## General and Accurate Salient Object Detection via a Unified Mamba-based Framework
 
-# [Conference Version][CVPR 2025-Highlight] Samba: A Unified Mamba-based Framework for General Salient Object Detection [[PDF]](https://www.kerenfu.top/sources/CVPR2025_Samba.pdf)|[[中文版]](https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf)
-Jiahao He, Keren Fu, Xiaohong Liu, Qijun Zhao<br />
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/intro_1.png" style="width: 80%;"/>
+<p align="center">
+  <strong>Wenzhuo Zhao</strong>, Keren Fu, Jiahao He, Xiaohong Liu, Qijun Zhao, Guangtao Zhai
+</p>
 
-## ✈ Overview
-We are the first to adapt state space models to SOD tasks, and propose a novel unified framework based on the pure Mamba architecture to flexibly handle general SOD tasks. We propose a saliency-guided Mamba block (SGMB), incorporating a spatial neighboring scanning (SNS) algorithm, to maintain spatial continuity of salient patches, thus enhancing feature representation. We propose a context-aware upsampling (CAU) method to promote hierarchical feature alignment and aggregations by modeling contextual dependencies.
+<p align="center">
+  <a href="https://www.kerenfu.top/sources/CVPR2025_Samba.pdf">📄 Paper</a> |
+  <a href="https://github.com/Jia-hao999/Samba/blob/main/CVPR2025_Samba_Chinese.pdf">📘 中文版</a> |
+  <strong>CVPR 2025 (Highlight)</strong>
+</p>
 
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/overview.png">
+<p align="center">
+  <img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/intro_1.png" width="80%">
+</p>
 
-## ✈ Environmental Setups
-`PyTorch 1.13.1 + CUDA 11.7`. Please install corresponding PyTorch and CUDA versions.
+---
 
-VMamba-S backbone weights：[[baidu](https://pan.baidu.com/s/1SaEV237VCzSEn558gEBiXg)，提取码：zsxa]
+## 🚀 Introduction
 
-Full Samba weights：[[baidu](https://pan.baidu.com/s/15787DVEmW59ftztopv-yMg)，提取码：bkvw]
+**Samba** is the first **unified Mamba-based framework** for **General Salient Object Detection (SOD)**.  
+We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demonstrate their strong capability in modeling long-range dependencies across multiple modalities.
 
-## ✈ Data Preparation
-### 1. RGB SOD
-For RGB SOD, we employ the following datasets to train our model: the training set of **DUTS** for `RGB SOD`. 
-For testing the RGB SOD task, we use **DUTS**, **ECSSD**, **HKU-IS**, **PASCAL-S**, **DUT-O**. [[baidu](https://pan.baidu.com/s/1oljb1_kkUH7rhWZCy8ic4g)，提取码：x7kn]
+### 🔑 Key Contributions
 
-### 2. RGB-D SOD
-For RGB-D SOD, we employ the following datasets to train our model concurrently: the training sets of **NJU2K**, **NLPR**, **DUT-RGBD** for `RGB-D SOD`. 
-For testing the RGB SOD task, we use **NJU2K**, **NLPR**, **DUT-RGBD**, **SIP**, **STERE**. [[baidu](https://pan.baidu.com/s/1ibrO3CS7rn7bJUAy8hM9mQ)，提取码：8b9c]
+- 🧠 Pure **Mamba-based architecture** for unified SOD modeling  
+- 🎯 **Saliency-Guided Mamba Block (SGMB)** with Spatial Neighboring Scanning (SNS)  
+- 🔄 **Context-Aware Upsampling (CAU)** for hierarchical feature alignment  
+- 🌈 Support for **RGB / RGB-D / RGB-T / VSOD / RGB-D VSOD**
 
-### 3. RGB-T SOD
-For RGB-T SOD, we employ the training set of **VT5000** to train our model, and the testing of **VT5000**, **VT821**, **VT1000** are utilized for testing. [[baidu](https://pan.baidu.com/s/1PKW5d_Yr5NFEnq9Q82HitA)，提取码：xhrm]
+---
 
-### 4. VSOD
-For VSOD, we employ the training sets of **DAVIS**, **DAVSOD**, **FBMS** to train our model concurrently, and the testing of **DAVIS**, **DAVSOD**, **FBMS**, **Seg-V2**, **VOS** are utilized for testing. [[baidu](https://pan.baidu.com/s/1zQ-vuDnSfRzJ1T_T-hh7sA)，提取码：kcmu]
+## 🧩 Framework Overview
 
-### 5. RGB-D VSOD
-For RGB-D VSOD, we employ the training sets of **RDVS**, **DVisal**, **Vidsod_100** to train our model individually, and the testing of **RDVS**, **DVisal**, **Vidsod_100** are utilized for testing individually. [[baidu](https://pan.baidu.com/s/1VRL3jk7AsQCkL26hwg1rZA)，提取码：q9ty]
+<p align="center">
+  <img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/overview.png" width="85%">
+</p>
 
-## ✈ Prediction
-All evaluated saliency maps are put here：[[baidu](https://pan.baidu.com/s/1NA9_ZtA_M4WHugPt92MrSA)，提取码：bdhi]
+---
 
-## ✈ Visual Results
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/visual_1.png" style="width: 80%;"/>
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/visual_2.png" style="width: 80%;"/>
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/visual_3.png" style="width: 80%;"/>
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/visual_4.png" style="width: 80%;"/>
-<img src="https://github.com/Jia-hao999/Samba/blob/main/Figure/visual_5.png" style="width: 80%;"/>
+## ⚙️ Environment Setup
 
-## ✈ Citation
-If you use Samba in your research or wish to refer our work, please use the following BibTeX entry.
-```
-@InProceedings{He_2025_CVPR,
-    author    = {He, Jiahao and Fu, Keren and Liu, Xiaohong and Zhao, Qijun},
-    title     = {Samba: A Unified Mamba-based Framework for General Salient Object Detection},
-    booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},
-    month     = {June},
-    year      = {2025},
-    pages     = {25314-25324}
-}
-```
+```bash
+PyTorch 1.13.1
+CUDA 11.7

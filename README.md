@@ -32,8 +32,9 @@
 
 ## 🚀 Introduction
 
-**Samba** and **Samba+** are the first **unified Mamba-based framework** for **General Salient Object Detection (SOD)**.  
-We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demonstrate their strong capability in modeling long-range dependencies across multiple modalities.
+- 📌 **Samba** and **Samba+** are the first adaptation of **State Space Models (SSMs)** to **Salient Object Detection (SOD)** tasks and demonstrate their strong capability in modeling long-range dependencies across multiple modalities.
+
+- 📌 **Samba+** is also the **first truly versatil SOD model** in the community.
 
 ---
 
@@ -48,10 +49,9 @@ We pioneer the adaptation of **State Space Models (SSMs)** to SOD tasks and demo
   <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/fig_sns_1.png" width="70%">
 </p>
 
-- 🧠 Pure **Mamba-based architecture** for unified SOD modeling  
-- 🎯 **Saliency-Guided Mamba Block (SGMB)** with Spatial Neighboring Scanning (SNS)  
-- 🔄 **Context-Aware Upsampling (CAU)** for hierarchical feature alignment  
-- 🌈 Support for **RGB SOD / RGB-D SOD / RGB-T SOD / VDT SOD / VSOD / RGB-D VSOD**
+- 🧠 The first **Mamba-based architecture** for SOD  
+- 🎯 By rethinking Mamba’s **scanning strategy** in the context of SOD, we introduce a **saliency-guided Mamba block (SGMB)** equipped with a **spatial neighborhood scanning (SNS)** algorithm, enabling better modeling of spatially coherent salient structures.
+- 🌈 Support for **RGB SOD / RGB-D SOD / RGB-T SOD / VDT SOD / VSOD / RGB-D VSOD** via a **single versatil** model
 
 ---
 

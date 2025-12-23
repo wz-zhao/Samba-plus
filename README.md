@@ -32,9 +32,9 @@
 
 ## 🚀 Introduction
 
-- 📌 **Samba** and **Samba+** are the first adaptation of **State Space Models (SSMs)** to **Salient Object Detection (SOD)** tasks and demonstrate their strong capability in modeling long-range dependencies across multiple modalities.
+-  **Samba** and **Samba+** are the first adaptation of **State Space Models (SSMs)** to **Salient Object Detection (SOD)** tasks and demonstrate their strong capability in modeling long-range dependencies across multiple modalities.
 
-- 📌 **Samba+** is also the **first truly versatil SOD model** in the community.
+-  **Samba+** is also the **first truly versatil SOD model** in the community.
 
 ---
 

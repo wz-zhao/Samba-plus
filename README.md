@@ -88,13 +88,13 @@ To avoid data leakage and ensure fair training, we only retain the samples from 
 ## ✨  Visual Results
 
 <p align="center">
-  <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/fig_visual_1.png" width="85%">
+  <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/fig_visual_1.png" width="100%">
 </p>
 
 ### Other Tasks that Emphasize Spatial Continuity
 
 <p align="center">
-  <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/other.jpg" width="80%">
+  <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/other.jpg" width="100%">
 </p>
 
 ---

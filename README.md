@@ -86,7 +86,7 @@ To avoid data leakage and ensure fair training, we only retain the samples from 
 ---
 
 ## ✨  Visual Results
-
+All evaluated saliency maps are put here: [Baidu](https://pan.baidu.com/s/1Lv9P8JW3YyI6Ds76wUnXaQ?pwd=p2h2)(`p2h2`)
 <p align="center">
   <img src="https://github.com/wz-zhao/Samba-plus/blob/main/Figures/fig_visual_1.png" width="100%">
 </p>
@@ -103,6 +103,8 @@ To avoid data leakage and ensure fair training, we only retain the samples from 
 
 - PyTorch 1.13.1
 - CUDA 11.7
+- VMamba-S backbone weights：[[baidu](https://pan.baidu.com/share/init?surl=SaEV237VCzSEn558gEBiXg)(zsxa)]
+- Samba+ weights：[[baidu](https://pan.baidu.com/s/1w7n2FuEo0R1hD-JE1JT-3w?pwd=3xxz)(3xxz)]
 
 
 

@@ -1,4 +1,9 @@
-# 🌟 Samba+: General and Accurate Salient Object Detection via a More Unified Mamba-based Framework    <a href="https://arxiv.org/abs/2602.01593"> <img src="https://img.shields.io/badge/arXiv-2602.01593-b31b1b.svg?logo=arxiv">
+# 🌟 Samba+: General and Accurate Salient Object Detection via a More Unified Mamba-based Framework   
+
+
+<p align="center">
+<a href="https://arxiv.org/abs/2602.01593">
+  <img src="https://img.shields.io/badge/arXiv-2602.01593-b31b1b.svg?logo=arxiv">
 </a>
 
 

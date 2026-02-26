@@ -112,9 +112,8 @@ All evaluated saliency maps are put here: [Baidu](https://pan.baidu.com/s/1Lv9P8
 - PyTorch 1.13.1
 - CUDA 11.7
 - VMamba-S backbone weights：[[baidu](https://pan.baidu.com/share/init?surl=SaEV237VCzSEn558gEBiXg)(zsxa)]
-- Samba+ weights：[[baidu](https://pan.baidu.com/s/1w7n2FuEo0R1hD-JE1JT-3w?pwd=3xxz)(3xxz)]
-
-
+- Samba+ weights：[[baidu](https://pan.baidu.com/s/1w7n2FuEo0R1hD-JE1JT-3w?pwd=3xxz)(3xxz)]; 
+[![Google Drive](https://img.shields.io/badge/Google-Drive-green?logo=google-drive)](https://drive.google.com/file/d/1S-8RV9vJT5VLuFcRQ8OS9GLEvf31ziCo/view?usp=sharing)
 
 ## 📚 Citation
 

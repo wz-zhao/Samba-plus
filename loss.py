@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import torch.distributed as dist
 import IOU
 
-def total_loss_suite_optimized(pred, mask, lambda_wbce=1.0, lambda_dice=1.0, lambda_focal=1.0, gamma=2.0):
+def total_loss_suite_optimized(pred, mask, lambda_wbce=1.0, lambda_dice=1.0, lambda_focal=1.0, gamma=2.0, reduction='mean'):
 
     weit = 1 + 5 * torch.abs(F.avg_pool2d(mask, kernel_size=31, stride=1, padding=15) - mask)
     wbce_loss = F.binary_cross_entropy_with_logits(pred, mask, reduction='none')
@@ -18,11 +18,11 @@ def total_loss_suite_optimized(pred, mask, lambda_wbce=1.0, lambda_dice=1.0, lam
 
     focal_bce = F.binary_cross_entropy_with_logits(pred, mask, reduction='none')
     pt = torch.exp(-focal_bce)
-    focal_loss = (((1 - pt)**gamma * focal_bce)).mean()
+    focal_loss = (((1 - pt)**gamma * focal_bce)).mean(dim=(1, 2, 3))
 
-    total_loss = (lambda_wbce * wbce_loss + lambda_dice * dice_loss).mean() + lambda_focal * focal_loss
+    total_loss = (lambda_wbce * wbce_loss + lambda_dice * dice_loss).mean(dim=1) + lambda_focal * focal_loss
 
-    return total_loss
+    return total_loss if reduction == 'none' else total_loss.mean()
 
 def total_loss_suite(pred, mask, 
                        lambda_structure=1.0, 
@@ -117,7 +117,7 @@ class FocalLoss(nn.Module):
 
 
 
-def structure_loss_edge(pred, mask):
+def structure_loss_edge(pred, mask, reduction='mean'):
     weit = 1 + 5 * torch.abs(F.avg_pool2d(mask, kernel_size=31, stride=1, padding=15) - mask)
     bce = F.binary_cross_entropy_with_logits(pred, mask, reduction='none')
     bce = (weit * bce).sum(dim=(2, 3)) / weit.sum(dim=(2, 3))
@@ -127,4 +127,5 @@ def structure_loss_edge(pred, mask):
     union = ((pred_sig + mask) * weit).sum(dim=(2, 3))
     iou = 1 - (inter + 1) / (union - inter + 1)
 
-    return (bce + iou).mean()
+    per_sample = (bce + iou).mean(dim=1)
+    return per_sample if reduction == 'none' else per_sample.mean()

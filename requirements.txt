@@ -1,0 +1,13 @@
+torch>=1.13.1
+torchvision>=0.14.1
+numpy
+Pillow
+opencv-python
+timm
+einops
+fvcore
+torch-geometric
+tqdm
+packaging
+ninja
+wheel

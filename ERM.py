@@ -36,8 +36,8 @@ def deform_conv2d_pytorch_grouped(
 
 
     kernel_offset_y, kernel_offset_x = torch.meshgrid(
-        torch.arange(-(kh - 1) // 2, (kh + 1) // 2, device=input.device, dtype=input.dtype),
-        torch.arange(-(kw - 1) // 2, (kw + 1) // 2, device=input.device, dtype=input.dtype),
+        torch.arange(kh, device=input.device, dtype=input.dtype),
+        torch.arange(kw, device=input.device, dtype=input.dtype),
         indexing='ij'
     )
     kernel_offset_x = kernel_offset_x * dilation[1]
@@ -60,8 +60,8 @@ def deform_conv2d_pytorch_grouped(
         sampling_grid = base_grid + kernel_offset + group_offset
 
 
-        sampling_grid_x = 2.0 * sampling_grid[..., 0] / (in_w - 1) - 1.0
-        sampling_grid_y = 2.0 * sampling_grid[..., 1] / (in_h - 1) - 1.0
+        sampling_grid_x = (2.0 * sampling_grid[..., 0] + 1) / in_w - 1.0
+        sampling_grid_y = (2.0 * sampling_grid[..., 1] + 1) / in_h - 1.0
         normalized_sampling_grid = torch.stack([sampling_grid_x, sampling_grid_y], dim=-1)
 
 
@@ -348,7 +348,7 @@ class GNNRoIFusion(nn.Module):
         edge_index = edge_index_template.unsqueeze(0).expand(batch_size, -1, -1)
         edge_index = edge_index + offsets.view(batch_size, 1, 1)
         
-        edge_index = edge_index.reshape(2, -1)
+        edge_index = edge_index.permute(1, 0, 2).reshape(2, -1)
 
         self.edge_index_cache[cache_key] = edge_index
         

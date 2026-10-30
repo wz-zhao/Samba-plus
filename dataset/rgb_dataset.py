@@ -3,7 +3,7 @@ from PIL import Image
 import torch
 from torch.utils import data
 import numpy as np
-import transform_dvsod, transform_single, transform_rgbd, transform_vsod, transform_rgbt
+
 
 def randomCrop(image, label):
     border = 30
@@ -19,7 +19,8 @@ def randomCrop(image, label):
 
 
 class Dataset(data.Dataset):
-    def __init__(self, datasets, mode='train', transform=None, return_size=True):
+    def __init__(self, datasets, mode='train', transform=None, return_size=True, root='.'):
+        self.root = os.fspath(root)
         self.return_size = return_size
         if type(datasets) != list:
             datasets = [datasets]
@@ -28,21 +29,21 @@ class Dataset(data.Dataset):
         for (i, dataset) in enumerate(datasets):
 
             if mode == 'train':
-                data_dir = './rgb_dataset/{}'.format(dataset)
+                data_dir = os.path.join(self.root, 'rgb_dataset', dataset)
                 imgset_path = data_dir + '/train.txt'
 
             else:
-                data_dir = './rgb_dataset/{}'.format(dataset)
+                data_dir = os.path.join(self.root, 'rgb_dataset', dataset)
                 imgset_path = data_dir + '/test.txt'
 
-            imgset_file = open(imgset_path)
+            imgset_file = open(imgset_path, encoding='utf-8')
 
             for line in imgset_file:
                 data = {}
-                img_path = line.strip("\n").split(" ")[0]
-                gt_path = line.strip("\n").split(" ")[1]
-                data['img_path'] = data_dir + img_path
-                data['gt_path'] = data_dir + gt_path
+                img_path = line.strip("\n").split()[0]
+                gt_path = line.strip("\n").split()[1]
+                data['img_path'] = os.path.join(data_dir, img_path.lstrip('/\\'))
+                data['gt_path'] = os.path.join(data_dir, gt_path.lstrip('/\\'))
                 data['split'] = 'Mamba'
                 data['dataset'] = dataset
                 self.datas_id.append(data)

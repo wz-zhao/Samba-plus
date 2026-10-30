@@ -98,7 +98,7 @@ class ToTensor(object):
         d = d.permute(2, 0, 1)
         mask = torch.from_numpy(mask)
         mask = mask.permute(2, 0, 1)
-        return rgb,t,d,mask.mean(dim=0, keepdim=True)
+        return rgb.float(), t.float(), d.float(), mask.float().mean(dim=0, keepdim=True)
     
 from PIL import Image, ImageOps, ImageEnhance
 import random

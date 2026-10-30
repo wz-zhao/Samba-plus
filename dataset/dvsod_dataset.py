@@ -20,7 +20,8 @@ def randomCrop(image, label, flow, depth):
 
 
 class Dataset(data.Dataset):
-    def __init__(self, datasets, mode='train', transform=None, return_size=True):
+    def __init__(self, datasets, mode='train', transform=None, return_size=True, root='.'):
+        self.root = os.fspath(root)
         self.return_size = return_size
         if type(datasets) != list:
             datasets = [datasets]
@@ -29,41 +30,41 @@ class Dataset(data.Dataset):
         for (i, dataset) in enumerate(datasets):
 
             if mode == 'train':
-                data_dir = './dvsod_dataset/{}'.format(dataset)
+                data_dir = os.path.join(self.root, 'dvsod_dataset', dataset)
                 imgset_path = data_dir + '/train.txt'
 
             else:
-                data_dir = './dvsod_dataset/{}'.format(dataset)
+                data_dir = os.path.join(self.root, 'dvsod_dataset', dataset)
                 imgset_path = data_dir + '/test.txt'
 
-            imgset_file = open(imgset_path)
+            imgset_file = open(imgset_path, encoding='utf-8')
 
             for line in imgset_file:
                 data = {}
-                img_path = line.strip("\n").split(" ")[0]
-                gt_path = line.strip("\n").split(" ")[1]
-                data['img_path'] = data_dir + img_path
-                data['gt_path'] = data_dir + gt_path
+                img_path = line.strip("\n").split()[0]
+                gt_path = line.strip("\n").split()[1]
+                data['img_path'] = os.path.join(data_dir, img_path.lstrip('/\\'))
+                data['gt_path'] = os.path.join(data_dir, gt_path.lstrip('/\\'))
                 
                 if dataset == 'DUTS-TR':
                     data['split'] = dataset
                     data['img_path'] = data_dir +'/'+ img_path
                     data['gt_path'] = data_dir +'/'+ gt_path
                 else:
-                    data['flow_path'] = data_dir + line.strip("\n").split(" ")[2]
-                    data['depth_path'] = data_dir + line.strip("\n").split(" ")[3]
+                    data['flow_path'] = os.path.join(data_dir, line.strip("\n").split()[2].lstrip('/\\'))
+                    data['depth_path'] = os.path.join(data_dir, line.strip("\n").split()[3].lstrip('/\\'))
                     data['split'] = img_path.split('/')[-3]
-                if dataset!="DVisal" and "PTB" in img_path or "rgbd" in img_path :
-                    data['img_path'] = "./dvsod_dataset/DVisal" + img_path
-                    data['gt_path'] = "./dvsod_dataset/DVisal" + gt_path
-                    data['flow_path'] = "./dvsod_dataset/DVisal" + line.strip("\n").split(" ")[2]
-                    data['depth_path'] = "./dvsod_dataset/DVisal" + line.strip("\n").split(" ")[3]
+                if dataset != "DVisal" and ("PTB" in img_path or "rgbd" in img_path):
+                    data['img_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "DVisal"), img_path.lstrip('/\\'))
+                    data['gt_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "DVisal"), gt_path.lstrip('/\\'))
+                    data['flow_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "DVisal"), line.strip("\n").split()[2].lstrip('/\\'))
+                    data['depth_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "DVisal"), line.strip("\n").split()[3].lstrip('/\\'))
                 exclude_keys = ["PTB", "CDTB", "tracklam", "Track-it-in-3D", "rgbd", "DET"]
                 if dataset == "DVisal" and all(key not in img_path for key in exclude_keys):
-                    data['img_path'] = "./dvsod_dataset/vidsod_100" + img_path
-                    data['gt_path'] = "./dvsod_dataset/vidsod_100" + gt_path
-                    data['flow_path'] = "./dvsod_dataset/vidsod_100" + line.strip("\n").split(" ")[2]
-                    data['depth_path'] = "./dvsod_dataset/vidsod_100" + line.strip("\n").split(" ")[3]
+                    data['img_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "vidsod_100"), img_path.lstrip('/\\'))
+                    data['gt_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "vidsod_100"), gt_path.lstrip('/\\'))
+                    data['flow_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "vidsod_100"), line.strip("\n").split()[2].lstrip('/\\'))
+                    data['depth_path'] = os.path.join(os.path.join(self.root, "dvsod_dataset", "vidsod_100"), line.strip("\n").split()[3].lstrip('/\\'))
 
                     
                 data['dataset'] = dataset
@@ -119,8 +120,8 @@ class Dataset(data.Dataset):
         if self.return_size:
             sample['size'] = torch.tensor(size)
         if self.datas_id[item]['dataset'] == 'DUTS-TR':
-            sample['flow'] = torch.zeros((3, 448, 448))
-            sample['depth'] = torch.zeros((3, 448, 448))
+            sample['flow'] = torch.zeros_like(sample['image'])
+            sample['depth'] = torch.zeros_like(sample['image'])
         name = self.datas_id[item]['gt_path'].split('/')[-1]
         sample['dataset'] = self.datas_id[item]['dataset']
         sample['split'] = self.datas_id[item]['split']

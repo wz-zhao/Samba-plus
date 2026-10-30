@@ -29,7 +29,7 @@ std_d = np.array([[[0.007 , 0.007 , 0.007 ]]])
 
 
 class Data(Dataset):
-    def __init__(self, root, mode='train'):
+    def __init__(self, root, mode='train', input_size=448):
         self.samples = []
         lines = os.listdir(os.path.join(root, 'GT'))
         self.mode = mode
@@ -43,20 +43,20 @@ class Data(Dataset):
         if mode == 'train':
             self.transform = transform.Compose( 
                                                 transform.ColorEnhance(),
-                                                transform.Resize(448, 448), transform.Random_rotate(),
+                                                transform.Resize(input_size, input_size), transform.Random_rotate(),
                                                 transform.RandomHorizontalFlip(), 
                                                 transform.Normalize(mean1=mean_rgb, mean2=mean_t, mean3=mean_d, std1=std_rgb, std2=std_t, std3=std_d),
                                                 transform.ToTensor())
         elif mode == 'test':
             self.transform = transform.Compose(transform.Normalize(mean1=mean_rgb, mean2=mean_t, mean3=mean_d, std1=std_rgb, std2=std_t, std3=std_d),
-                                                transform.Resize(448, 448),
+                                                transform.Resize(input_size, input_size),
                                                 transform.ToTensor())
         else:
             raise ValueError
 
     def __getitem__(self, idx):
         rgbpath,tpath,dpath,maskpath = self.samples[idx]
-        rgb = cv2.imread(rgbpath).astype(np.float32)
+        rgb = cv2.cvtColor(cv2.imread(rgbpath), cv2.COLOR_BGR2RGB).astype(np.float32)
         
         t = cv2.imread(tpath).astype(np.float32)
         d = cv2.imread(dpath).astype(np.float32)

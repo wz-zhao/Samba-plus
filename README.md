@@ -120,6 +120,12 @@ All evaluated saliency maps are put here: [Baidu](https://pan.baidu.com/s/1Lv9P8
 If you find this repository useful, please use the following BibTeX entry for citation and give us a star⭐.
 
 ```bibtex
+@article{zhao2026samba+,
+  title={Samba+: General and Accurate Salient Object Detection via A More Unified Mamba-based Framework},
+  author={Zhao, Wenzhuo and Fu, Keren and He, Jiahao and Liu, Xiaohong and Zhao, Qijun and Zhai, Guangtao},
+  journal={arXiv preprint arXiv:2602.01593},
+  year={2026}
+}
 
 @InProceedings{He_2025_CVPR,
   author    = {He, Jiahao and Fu, Keren and Liu, Xiaohong and Zhao, Qijun},

@@ -3,14 +3,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 from functools import partial
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
-from ..net_utils import FeatureFusionModule as FFM
-from ..net_utils import FeatureRectifyModule as FRM
 import math
 import time
-from engine.logger import get_logger
 from models.encoders.vmamba import Backbone_VSSM, SaliencyMambaBlock,ConcatMambaFusionBlock
-from models.ERM import ERM_Contour_Integrity,GNNRoIFusion
-logger = get_logger()
+from ERM import ERM_Contour_Integrity, GNNRoIFusion
 
 
 class RGBXMamba(nn.Module):
@@ -137,7 +133,8 @@ class RGBXMamba(nn.Module):
         if x_t is not None:
             inputs.append(outs_t[id])
 
-        out_rgb = self.modality_mamba[id - 1](inputs)
+        # Stage 1 learns the RGB anchor without cross-modal interaction.
+        out_rgb = inputs[0] if len(inputs) == 1 else self.modality_mamba[id - 1](inputs)
         supervised_mask, final_refined_feature =  self.erm(out_rgb)
 
         guide_saliency = supervised_mask
@@ -182,10 +179,11 @@ class vssm_small(RGBXMamba):
         super(vssm_small, self).__init__(
             depths=[2, 2, 27, 2],
             dims=96,
-            pretrained='vssmsmall_dp03_ckpt_epoch_238.pth',
+            pretrained=kwargs.pop('pretrained', 'vssmsmall_dp03_ckpt_epoch_238.pth'),
             mlp_ratio=0.0,
             downsample_version='v1',
             drop_path_rate=0.3,
+            **kwargs,
         )
 
 class vssm_base(RGBXMamba):

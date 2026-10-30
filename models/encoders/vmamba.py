@@ -31,7 +31,22 @@ except:
 
 # cross selective scan ===============================
 if True:
-    import selective_scan_cuda_core as selective_scan_cuda
+    try:
+        import selective_scan_cuda_core as selective_scan_cuda
+    except (ImportError, OSError):
+        selective_scan_cuda = None
+    from .scan_backend import selective_scan_torch, warn_reference_backend
+
+    def selective_scan_dispatch(u, delta, A, B, C, D=None, delta_bias=None,
+                                delta_softplus=True, nrows=1):
+        backend = os.environ.get('SAMBA_SCAN_BACKEND', 'auto')
+        if backend == 'cuda' and (selective_scan_cuda is None or not u.is_cuda):
+            raise RuntimeError('CUDA scan requested but selective_scan_cuda_core or CUDA is unavailable')
+        if backend != 'torch' and selective_scan_cuda is not None and u.is_cuda:
+            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+        warn_reference_backend()
+        return selective_scan_torch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+
     
     class SelectiveScan(torch.autograd.Function):
         @staticmethod
@@ -249,7 +264,7 @@ if True:
 
     def traverse_saliency_tensor(tensor):
         # result = []
-        tensor = tensor.squeeze()
+        tensor = tensor.reshape(tensor.shape[-2:])
         result_index = []
         current_row = 0
         direction = 'left_right'
@@ -292,7 +307,7 @@ if True:
                             direction = 'right_left'
 
             current_row += 1
-        return torch.tensor(result_index, device=tensor.device)
+        return torch.tensor(result_index, device=tensor.device, dtype=torch.long)
 
     def restore_saliency_tensor(original_shape, non_zero_values, non_zero_indexs):
         B, C, H, W = original_shape
@@ -314,9 +329,10 @@ if True:
             non_zero_indexs_expanded = non_zero_indexs_expanded.expand(C, -1).unsqueeze(0)
             s = torch.gather(x_rgb[b:b+1,:].view(1,C,H*W), 2, non_zero_indexs_expanded)
             # s, mask_s = extract_non_zero_values(x_rgb[b:b+1,:] * gt[b:b+1,:])
-            x_rgb = x_rgb.float()
-            gt = gt.float()
-            ns, mask_ns = extract_non_zero_values(x_rgb[b:b+1,:] * (1-gt[b:b+1,:]))
+            # Select by the spatial mask, including valid zero-valued features.
+            background = torch.nonzero(gt[b, 0].reshape(-1) < 0.5, as_tuple=False).flatten()
+            mask_ns = background.view(1, 1, -1).expand(1, C, -1)
+            ns = torch.gather(x_rgb[b:b+1].reshape(1, C, H * W), 2, mask_ns)
             scan_1 = torch.cat((s,ns), -1)
             scan_1_flip = torch.cat((s.flip(dims=[-1]), ns.flip(dims=[-1])), -1)
             scan_2 = torch.cat((ns,s), -1)
@@ -703,7 +719,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             xs, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -775,7 +791,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             xs, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -843,7 +859,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             x_fuse, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -909,7 +925,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             x_fuse, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -974,7 +990,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             x_fuse, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -1037,7 +1053,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             x_fuse, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -1097,7 +1113,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             x_fuse, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -1159,7 +1175,7 @@ if True:
          
         # to enable fvcore.nn.jit_analysis: inputs[i].debugName
         def selective_scan(u, delta, A, B, C, D=None, delta_bias=None, delta_softplus=True, nrows=1):
-            return SelectiveScan.apply(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
+            return selective_scan_dispatch(u, delta, A, B, C, D, delta_bias, delta_softplus, nrows)
 
         ys: torch.Tensor = selective_scan(
             x_fuse, dts, As, Bs, Cs, Ds, delta_bias, delta_softplus, nrows,
@@ -4157,13 +4173,14 @@ class Backbone_VSSM(VSSM):
         if ckpt is None:
             return
         
-        try:
-            _ckpt = torch.load(open(ckpt, "rb"), map_location=torch.device("cpu"))
-            print(f"Successfully load ckpt {ckpt}")
-            incompatibleKeys = self.load_state_dict(_ckpt[key], strict=False)
-            print('incompatible:', incompatibleKeys)      
-        except Exception as e:
-            print(f"Failed loading checkpoint form {ckpt}: {e}")
+        _ckpt = torch.load(ckpt, map_location='cpu', weights_only=False)
+        state = _ckpt.get(key, _ckpt.get('state_dict', _ckpt))
+        state = {name.removeprefix('module.'): value for name, value in state.items()}
+        if not set(self.state_dict()).intersection(state):
+            raise ValueError(f'No matching VMamba encoder weights in {ckpt}')
+        incompatible = self.load_state_dict(state, strict=False)
+        print(f'Loaded VMamba encoder from {ckpt}; missing={len(incompatible.missing_keys)}, '
+              f'unexpected={len(incompatible.unexpected_keys)}')
 
     def forward(self, x):
         x = self.patch_embed(x)

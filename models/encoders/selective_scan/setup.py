@@ -45,6 +45,9 @@ def get_ext():
     print("\n\ntorch.__version__  = {}\n\n".format(torch.__version__))
 
     # Check, if CUDA11 is installed for compute capability 8.0
+    if CUDA_HOME is None:
+        raise RuntimeError('CUDA Toolkit/nvcc was not found. Set CUDA_HOME to compile '
+                           'the extension, or use --scan_backend torch for checks.')
     if CUDA_HOME is not None:
         _, bare_metal_version = get_cuda_bare_metal_version(CUDA_HOME)
         if bare_metal_version < Version("11.6"):
@@ -53,13 +56,7 @@ def get_ext():
                 "Note: make sure nvcc has a supported version by running nvcc -V."
             )
 
-    cc_flag.append("-gencode")
-    cc_flag.append("arch=compute_70,code=sm_70")
-    cc_flag.append("-gencode")
-    cc_flag.append("arch=compute_80,code=sm_80")
-    if bare_metal_version >= Version("11.8"):
-        cc_flag.append("-gencode")
-        cc_flag.append("arch=compute_90,code=sm_90")
+    # Let PyTorch select visible GPU architectures or TORCH_CUDA_ARCH_LIST.
 
     # HACK: The compiler flag -D_GLIBCXX_USE_CXX11_ABI is set to be the same as
     # torch._C._GLIBCXX_USE_CXX11_ABI
@@ -71,14 +68,14 @@ def get_ext():
         CUDAExtension(
             name="selective_scan_cuda_core",
             sources=[
-                "csrc/selective_scan/selective_scan.cpp",
-                "csrc/selective_scan/selective_scan_core.cu",
-                "csrc/selective_scan/selective_scan_core_fwd2.cu",
-                "csrc/selective_scan/selective_scan_core_fwd3.cu",
-                "csrc/selective_scan/selective_scan_core_fwd4.cu",
+                str(Path(this_dir) / "csrc/selective_scan/selective_scan.cpp"),
+                str(Path(this_dir) / "csrc/selective_scan/selective_scan_core.cu"),
+                str(Path(this_dir) / "csrc/selective_scan/selective_scan_core_fwd2.cu"),
+                str(Path(this_dir) / "csrc/selective_scan/selective_scan_core_fwd3.cu"),
+                str(Path(this_dir) / "csrc/selective_scan/selective_scan_core_fwd4.cu"),
             ],
             extra_compile_args={
-                "cxx": ["-O3", "-std=c++17"],
+                "cxx": ["/O2", "/std:c++17"] if sys.platform == 'win32' else ["-O3", "-std=c++17"],
                 "nvcc": [
                             "-O3",
                             "-std=c++17",
@@ -97,7 +94,7 @@ def get_ext():
                         + cc_flag
                         + ["--threads", "4"],
             },
-            include_dirs=[Path(this_dir) / "csrc" / "selective_scan"],
+            include_dirs=[str(Path(this_dir) / "csrc" / "selective_scan")],
         )
     )
 
